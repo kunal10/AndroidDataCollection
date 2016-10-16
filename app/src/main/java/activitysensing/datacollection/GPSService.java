@@ -35,6 +35,8 @@ public class GPSService extends Service implements LocationListener {
     private FileOutputStream output;
     private long lastTime = 0;
     private int period = 5;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
     @Nullable
     @Override
@@ -55,17 +57,9 @@ public class GPSService extends Service implements LocationListener {
             e.printStackTrace();
         }
         Toast.makeText(this, "Service Started for GPS", Toast.LENGTH_LONG).show();
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "No GPS Permission", Toast.LENGTH_LONG).show();
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            //return;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         return START_STICKY;
@@ -87,11 +81,28 @@ public class GPSService extends Service implements LocationListener {
 
         double latitude = (location.getLatitude());
         double longitude = (location.getLongitude());
-        long tsLong = System.currentTimeMillis()/1000;
+        long tsLong = System.currentTimeMillis() / 1000;
         if (tsLong > lastTime + period) {
             lastTime = tsLong;
             writeDataToFile(latitude, longitude, tsLong);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
+        try {
+            writer.close();
+            output.getFD().sync();
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.removeUpdates(this);
     }
 
     // write to file a line in format:
@@ -100,7 +111,7 @@ public class GPSService extends Service implements LocationListener {
         String ts = tsLong.toString();
         String gpsLine = ts+", " +
                 Double.toString(latitude) + ", " +
-                Double.toString(longitude) + ", ";
+                Double.toString(longitude) + ", " + "\n";
         try {
             writer.write(gpsLine);
             writer.flush();

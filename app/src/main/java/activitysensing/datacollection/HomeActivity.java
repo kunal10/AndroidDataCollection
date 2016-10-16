@@ -32,6 +32,7 @@ public class HomeActivity extends AppCompatActivity  {
 
     public void stop(View v){
         stopService(new Intent(getApplicationContext(), AccelService.class));
+        stopService(new Intent(getApplicationContext(),GPSService.class));
     }
 
 
