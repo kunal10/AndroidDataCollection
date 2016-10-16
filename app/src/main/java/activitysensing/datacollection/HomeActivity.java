@@ -24,8 +24,10 @@ public class HomeActivity extends AppCompatActivity  {
     }
 
     public void start(View v){
-        Intent intent = new Intent(this, AccelService.class);
-        startService(intent);
+        Intent intentAccel = new Intent(this, AccelService.class);
+        startService(intentAccel);
+        Intent intentGPS = new Intent(this,GPSService.class);
+        startService(intentGPS);
     }
 
     public void stop(View v){
