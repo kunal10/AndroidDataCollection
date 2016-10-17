@@ -28,11 +28,14 @@ public class HomeActivity extends AppCompatActivity  {
         startService(intentAccel);
         Intent intentGPS = new Intent(this,GPSService.class);
         startService(intentGPS);
+        Intent intentCam = new Intent(this,CameraService.class);
+        startService(intentCam);
     }
 
     public void stop(View v){
         stopService(new Intent(getApplicationContext(), AccelService.class));
         stopService(new Intent(getApplicationContext(),GPSService.class));
+        stopService(new Intent(getApplicationContext(),CameraService.class));
     }
 
 
