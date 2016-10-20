@@ -77,11 +77,11 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startService(intent);
 
-//                Intent intentAccel = new Intent(HomeActivity.this, AccelService.class);
-//                startService(intentAccel);
-//
-//                Intent intentGPS = new Intent(HomeActivity.this,GPSService.class);
-//                startService(intentGPS);
+                Intent intentAccel = new Intent(HomeActivity.this, AccelService.class);
+                startService(intentAccel);
+
+                Intent intentGPS = new Intent(HomeActivity.this,GPSService.class);
+                startService(intentGPS);
                 finish();
             }
         });
@@ -91,8 +91,8 @@ public class HomeActivity extends Activity implements SurfaceHolder.Callback {
         {
             public void onClick(View v)
             {
-//                stopService(new Intent(HomeActivity.this, AccelService.class));
-//                stopService(new Intent(HomeActivity.this,GPSService.class));
+                stopService(new Intent(HomeActivity.this, AccelService.class));
+                stopService(new Intent(HomeActivity.this,GPSService.class));
                 stopService(new Intent(HomeActivity.this, RecorderService.class));
             }
         });

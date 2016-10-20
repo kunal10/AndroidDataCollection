@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
@@ -33,8 +34,9 @@ public class AccelService extends Service implements SensorEventListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startid) {
         try {
-            File path = this.getExternalFilesDir(null);
-            File outputFile = new File(path, "accel-data" + Long.toString(System.currentTimeMillis()/1000) + ".csv");
+//            File path = this.getExternalFilesDir(null);
+            String pathStr = Environment.getExternalStorageDirectory().getPath() + "/accel-data/"+Long.toString(System.currentTimeMillis()/1000)+".csv";
+            File outputFile = new File(pathStr);
             Toast.makeText(this, outputFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
             output = new FileOutputStream(outputFile, true);
             writer = new FileWriter(output.getFD());

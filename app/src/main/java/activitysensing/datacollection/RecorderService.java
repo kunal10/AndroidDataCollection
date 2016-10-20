@@ -114,14 +114,14 @@ public class RecorderService extends Service {
             p.setPreviewSize(previewSize.width, previewSize.height);
             mServiceCamera.setParameters(p);
 
-//            try {
-//                mServiceCamera.setPreviewDisplay(mSurfaceHolder);
-//                mServiceCamera.startPreview();
-//            }
-//            catch (IOException e) {
-//                Log.e(TAG, e.getMessage());
-//                e.printStackTrace();
-//            }
+            try {
+                mServiceCamera.setPreviewDisplay(mSurfaceHolder);
+                mServiceCamera.startPreview();
+            }
+            catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+                e.printStackTrace();
+            }
 
             mServiceCamera.unlock();
 
@@ -132,7 +132,10 @@ public class RecorderService extends Service {
             mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-            mMediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getPath() + "cam-data" + Long.toString(System.currentTimeMillis()/1000) + ".mp4");
+            mMediaRecorder.setCaptureRate(1);
+//            mMediaRecorder.setVideoFrameRate(1);
+            mMediaRecorder.setVideoSize(1280,720);
+            mMediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getPath() + "/camera-data/"+Long.toString(System.currentTimeMillis()/1000)+".mp4");
             mMediaRecorder.setPreviewDisplay(mSurfaceHolder.getSurface());
 
             mMediaRecorder.prepare();

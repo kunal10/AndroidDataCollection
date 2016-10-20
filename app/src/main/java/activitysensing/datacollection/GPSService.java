@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.content.Context;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -42,8 +43,9 @@ public class GPSService extends Service implements LocationListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startid) {
         try {
-            File path = this.getExternalFilesDir(null);
-            File outputFile = new File(path, "gps-data" + Long.toString(System.currentTimeMillis() / 1000) + ".csv");
+//            File path = this.getExternalFilesDir(null);
+            String pathStr = Environment.getExternalStorageDirectory().getPath() + "/gps-data/"+Long.toString(System.currentTimeMillis()/1000)+".csv";
+            File outputFile = new File(pathStr);
             Toast.makeText(this, outputFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
             output = new FileOutputStream(outputFile, true);
             writer = new FileWriter(output.getFD());
