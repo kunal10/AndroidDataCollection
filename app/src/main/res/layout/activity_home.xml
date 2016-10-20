@@ -8,29 +8,33 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="activitysensing.datacollection.HomeActivity">
+    tools:context="activitysensing.datacollection.OldHomeActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Hello World!"
+        android:id="@+id/textView" />
 
     <Button
         android:text="Stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="117dp"
         android:id="@+id/stop_button"
-        android:onClick="stop" />
+        android:onClick="stop"
+        android:layout_marginBottom="132dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/start_button"
+        android:layout_marginEnd="16dp" />
 
     <Button
         android:text="Start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/start_button"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/stop_button"
-        android:onClick="start" />
+        android:onClick="start"
+        android:layout_marginStart="23dp"
+        android:layout_marginBottom="62dp"
+        android:layout_alignBottom="@+id/stop_button"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
